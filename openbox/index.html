@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Simple PWA (Progressive Web App) Valina (pure javaScript) made by Alex with intenction to practice PWA">
+    <meta name="autor" content="Alex Aleluia">
+    <title>Box</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="css/style.css" media="all">
+    <!-- The manifest should be included on app shell ? -->
+    <link rel="manifest" href="manifest.json">
+     <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="img/ico-152.png">
+
+    <!-- add icon to windows desktop -->
+    <meta name="msapplication-TileImage" content="img/ico-144.png">
+    <meta name="msapplication-TileColor" content="#2F3BA2">
+
+    <meta name="theme-color" content="#141414"/>
+</head>
+<body>
+    <div class="box">
+        <input type="button" value="Open" id="toggleButton">
+        <h3>Simple PWA </h3>
+    </div>
+    <script src="js/script.js" async></script>
+    <script>
+    // register a service worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js');
+        });
+    }
+    </script>
+</body>
+</html>
