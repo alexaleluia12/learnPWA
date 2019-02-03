@@ -1,5 +1,3 @@
-TODO: explicar com mais detalhes baseado no openbox
-
 para ter um pwa precisa de
     - service workers
         proxy entre o brawser e o aplicativo
@@ -7,51 +5,17 @@ para ter um pwa precisa de
         rece eventos tanto do app shell quanto da rede/brawser
         permite fazer notificacoes mesmo com o brawser fechado
         * precisa ser amazeando em https
-        
+
         o service worker vai poder registrar os arquivos na path que ele faz parte/eh pai
         https://stackoverflow.com/questions/35780397/understanding-service-worker-scope
         por isso é bom deixar na /
-        
+
     - web app manifest file
         permite instalar app como se fose nativo
 
-app shell: ui + logic without data, permite caregamento rapido
-
-
-ferramentas
-    gulp + sw-precache
-
-estrategias de cache:
-    cache first, then network
-    network fist, then cache
-    cache only
-    cache and network race
-    cache then network
-
-https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa?utm_source=syndicate&utm_medium=post&utm_campaign=scotch-jun172510
-https://scotch.io/tutorials/the-ultimate-guide-to-progressive-web-applications#toc-framework-support-in-react-angular-and-vue-js    
-https://github.com/nolanlawson/pokedex.org#readme
-https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp/?hl=pt-br
-https://blog.twitter.com/engineering/en_us/topics/open-source/2017/how-we-built-twitter-lite.html
-https://hnpwa.com/
-https://developers.google.com/web/fundamentals/performance/prpl-pattern/?utm_source=syndicate&utm_medium=post&utm_campaign=scotch-jun172510
-https://www.pwastats.com/
-https://pwa.rocks/
-https://pwa-directory.appspot.com/
-https://willianjusten.com.br/como-fazer-seu-site-funcionar-offline-com-pwa/
-https://developers.google.com/web/progressive-web-apps/checklist
-https://developers.google.com/web/ilt/pwa/
-cursos gratis pwa: https://gist.github.com/alexaleluia12/c067f560bfdd67887c9370570a8f97cf
-
-
-
-
-
-++++++++++
-
 app shell: minimo de html, css, js para exibir o app
     ele é cacheado depois do primeiro request pelo service worker
-    
+
     guia para criar app shell:
         The first step is to break the design down into its core components.
 
@@ -60,7 +24,7 @@ app shell: minimo de html, css, js para exibir o app
         What needs to be on screen immediately?
         What other UI components are key to our app?
         What supporting resources are needed for the app shell? For example images, JavaScript, styles, etc.
-    
+
     libs:
     cache: indexDB - https://github.com/localForage/localForage
     service worker: https://developers.google.com/web/tools/workbox/
@@ -76,10 +40,64 @@ bons exemplos simples:
     https://medium.com/dev-channel/learn-how-to-build-a-pwa-in-under-5-minutes-c860ad406ed
     https://medium.freecodecamp.org/how-you-can-make-a-progressive-web-app-in-an-hour-7e36d560610e
 
-===========
 
-app feito por mim: openbox
-    utiliza: workbox, passou em todos os testes do lighthouse
-ainda nao como seria fazer um app funcionar offline
-    
+estrategias de cache:
+    cache first, then network
+    network fist, then cache
+    cache only
+    cache and network race
+    cache then network
 
+
+exemplo openbox:
+ - app shell é registrado no serviceWorker para o app funcionar mesmo offline (so depende do arquivo js)
+     workbox.precaching.precacheAndRoute([
+        '/index.html',
+        '/css/style.css',
+        '/js/script.js',
+        {'url': '/', 'version': '1.1'}
+    ]);
+- o proprio manifest.json e serviceworker não vão para o app shell
+- é importante a aplicação ser mostrada logo então apenas css e html para rendereizar a pagina
+  eh bom adiconar o atributo sync na tag javascript
+- imagens de icone
+  necessário 5 imagens de tamanho difernete (quadradas) do icone (pode ser gerada em: https://www.pwabuilder.com/imageGenerator)
+  128
+  144
+  152
+  192
+  512
+- é preciso adicionar algumas tags no html para fazer parecer um app nativo
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="img/ico-152.png">
+
+    <!-- add icon to windows desktop -->
+    <meta name="msapplication-TileImage" content="img/ico-144.png">
+    <meta name="msapplication-TileColor" content="#2F3BA2">
+
+    <!-- cor do toolbar -->
+    <meta name="theme-color" content="#141414"/>
+- tecnica usada para mostrar elementos:
+    opacity: 1|0 dependendo do estado do botão
+- explicação detalhada de cada elemento do manifest.json
+   ?
+
+links
+
+https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa?utm_source=syndicate&utm_medium=post&utm_campaign=scotch-jun172510
+https://scotch.io/tutorials/the-ultimate-guide-to-progressive-web-applications#toc-framework-support-in-react-angular-and-vue-js
+https://github.com/nolanlawson/pokedex.org#readme
+https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp/?hl=pt-br
+https://blog.twitter.com/engineering/en_us/topics/open-source/2017/how-we-built-twitter-lite.html
+https://hnpwa.com/
+https://developers.google.com/web/fundamentals/performance/prpl-pattern/?utm_source=syndicate&utm_medium=post&utm_campaign=scotch-jun172510
+https://www.pwastats.com/
+https://pwa.rocks/
+https://pwa-directory.appspot.com/
+https://willianjusten.com.br/como-fazer-seu-site-funcionar-offline-com-pwa/
+https://developers.google.com/web/progressive-web-apps/checklist
+https://developers.google.com/web/ilt/pwa/
+cursos gratis pwa: https://gist.github.com/alexaleluia12/c067f560bfdd67887c9370570a8f97cf

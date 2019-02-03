@@ -1,2 +1,2 @@
+- adicionar webkit de forma automatica
 - deploy
-- * criar um desse mesmo esque com lista de telefones de emergencia (por ads)

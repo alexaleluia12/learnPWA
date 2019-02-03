@@ -31,7 +31,6 @@
         app.box.style.opacity = 0;
     }
 
-
     app.toggleButton.addEventListener('click', function(event) {
         event.preventDefault();
         if (app.state.close) {
